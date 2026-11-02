@@ -1,0 +1,16 @@
+{
+  "as_of": "2026-11-02",
+  "currency": "USD",
+  "models": {
+    "claude-haiku-5-5": {
+      "input_per_million_tokens": 0.10,
+      "output_per_million_tokens": 0.50,
+      "source": " https://platform.claude.com/docs/en/about-claude/pricing : Page Pricing Anthropic, Haiku 5.5, tarif de base pour prompts jusqu'a 100000 tokens, releve le 2026-11-02"
+    },
+    "amazon.titan-embed-text-v2:0": {
+      "input_per_million_tokens": 0.20,
+      "output_per_million_tokens": 0,
+      "source": "https://aws.amazon.com/bedrock/pricing/: Page Amazon Bedrock Pricing, Titan Text Embeddings V2, on-demand, region Europe (Francfort), releve le 2026-11-02"
+    }
+  }
+}
