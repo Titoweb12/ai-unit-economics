@@ -150,10 +150,23 @@ class WrappedBedrock:
         return getattr(self._real, name)
 
 
-def install(module, conn, prices):
-    """Remplace les clients `claude` et `bedrock` d'un module déjà importé."""
+DEFAULT_CLIENTS = {"claude": "anthropic", "bedrock": "bedrock"}
+
+
+def install(module, conn, prices, clients=None):
+    """Remplace les clients d'un module déjà importé par des versions mesurées.
+
+    `clients` associe le nom de l'attribut au type de client ("anthropic" ou
+    "bedrock"). Un attribut absent est ignoré, un attribut déjà enveloppé aussi.
+    Renvoie la liste des attributs enveloppés.
+    """
     rec = _Recorder(conn, prices)
-    if not isinstance(module.claude, WrappedAnthropic):
-        module.claude = WrappedAnthropic(module.claude, rec)
-    if not isinstance(module.bedrock, WrappedBedrock):
-        module.bedrock = WrappedBedrock(module.bedrock, rec)
+    wrapped = []
+    for name, kind in (clients or DEFAULT_CLIENTS).items():
+        obj = getattr(module, name, None)
+        if obj is None or isinstance(obj, (WrappedAnthropic, WrappedBedrock)):
+            continue
+        cls = WrappedBedrock if kind == "bedrock" else WrappedAnthropic
+        setattr(module, name, cls(obj, rec))
+        wrapped.append(name)
+    return wrapped
