@@ -19,6 +19,8 @@ All three come from my previous project, [AWS-Agentic-Rag](https://github.com/Ti
 
 ## Headline result
 
+![Key figures for the three systems](docs/dashboard-key-figures.png)
+
 80 questions × 3 trials × 3 systems = 720 runs, about 3,500 model calls, $0.61 in total (judge included).
 
 | | Original RAG | Strict RAG | Agent |
@@ -30,6 +32,8 @@ All three come from my previous project, [AWS-Agentic-Rag](https://github.com/Ti
 - Success includes failures and refusals: a wrong refusal or an unsupported claim counts as a failure, and its cost stays in the numerator.
 - The agent is not measurably better than the strict RAG on quality (the gap is smaller than the variation between trials) but costs about 1.6× more per success.
 - Cost reconciliation: tokens match the provider console exactly (3,176,109); cost is $0.622 computed against $0.62 displayed (the console rounds to the cent).
+
+
 ## How success and cost are defined
 
 **Success** (defined once, in the SQL view `v_outcomes`):
@@ -63,6 +67,12 @@ All three come from my previous project, [AWS-Agentic-Rag](https://github.com/Ti
 - **Language is not part of success**, although it is recorded.
 - **Partial cost coverage**: only Haiku 5.5 and Titan at the dated prices; cache tokens are not priced; the judge is excluded from production cost.
 - **Cost, not value.** Revenue and incremental profit are out of scope. The value, ROI and break-even layer will rely on explicit assumptions and be kept visibly apart from these measurements.
+
+## Dashboard
+
+![Success rate and cost per 1,000 successes across the three trials](docs/dashboard-trials.png)
+
+![Where the money goes, per step and per system](docs/dashboard-costs.png)
 
 ## Run it
 
